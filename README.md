@@ -1,2 +1,3 @@
-# Python---practice
-Python practice code
+# Python練習
+Python学習の上で、自分が書いたPythonコードをまとめていきます。
+自身の進行度具合やこれまでの記録です。
