@@ -47,12 +47,26 @@ class Monster_fight:
     def info(self, user: str):
         print(f"「{user}のモンスター:{self.name},体力:{self.hp},属性:{self.type},ダメージ軽減率:{self.dura}」")
 
-    def manage(self):
+    def manage(self, turn: int, mode: str, value: str):
         display= {1: "攻撃", 2:"回復",3:"逃げる"}
-        print(display)
-        user_choice_action= input("何をする？（例: 1): ")
-
+        if mode == "choice":
+            if turn % 2 == 1:
+                print(display)
+                user_choice_action= int(input("何をする？数字を入力（例: 1): "))
+                return display.get(user_choice_action)
+            else:
+                return random.choice(list(display.values()))
+        elif mode == "convert":
+            display2= {"攻撃": 1, "回復": 2, "逃げる": 3}
+            return display2.get(value)
     
+    def play(self, action: int, target):
+        if action == 1:
+            if target.hp > 0:
+                target.hp -= 10*(1 - target.dura/10)
+            else:
+                return 1
+            
 
 l_monsters= [
     {"name":"火ネズミ", "ID":1},
@@ -99,4 +113,16 @@ p1.info("あなた")
 p2.info("相手")
 
 print("バトルを開始します。")
+stop = 0
+turn = 1
+while stop < 2:
+    if turn % 2 == 1:
+        attacker = p1
+    elif turn % 2 == 0:
+        attacker = p2
 
+    player_action_1= attacker.manage(turn, "choice", 0)
+    player_action_fin= attacker.manage(turn, "convert", player_action_1)
+
+    attacker.play():
+    
